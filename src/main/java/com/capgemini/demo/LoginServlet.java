@@ -18,7 +18,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userID = request.getParameter("user");
 		String password = request.getParameter("pwd");
-		if (userID.matches("^[A-Z]{1}[a-z]{2,}([\\s][A-Z]{1}[a-z]{2,})?$")) {
+		if (userID.matches("^[A-Z]{1}[a-z]{2,}([\\s][A-Z]{1}[a-z]{2,})?$") && 
+				password.matches("^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=\\.~`])(.){8,}$")) {
 			request.setAttribute("user", userID);
 			request.getRequestDispatcher("LoginSuccess.jsp").forward(request, response);
 		} else {
