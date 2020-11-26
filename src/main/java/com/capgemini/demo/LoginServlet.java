@@ -11,24 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet (
-	description = "Login Servlet Testing",
-	urlPatterns = {"/LoginServlet"},
-	initParams = {
-		@WebInitParam(name = "user", value = "Pranav"),
-		@WebInitParam(name = "password", value = "Capgemini") 
-	}
-)
 
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String user = request.getParameter("user");
-		String pwd = request.getParameter("pwd");
-		String userID = getServletConfig().getInitParameter("user");
-		String password = getServletConfig().getInitParameter("password");
-		if (userID.equals(user) && password.equals(pwd)) {
-			request.setAttribute("user", user);
+		String userID = request.getParameter("user");
+		String password = request.getParameter("pwd");
+		if (userID.matches("^[A-Z]{1}[a-z]{2,}([\\s][A-Z]{1}[a-z]{2,})?$")) {
+			request.setAttribute("user", userID);
 			request.getRequestDispatcher("LoginSuccess.jsp").forward(request, response);
 		} else {
 			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
